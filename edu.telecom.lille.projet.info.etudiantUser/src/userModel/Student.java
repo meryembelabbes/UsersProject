@@ -31,9 +31,10 @@ public class Student extends User {
 	/**
 	 * The constructor.
 	 */
-	public Student() {
+	public Student(String userSurname, String userName, String userLogin,String userPwd, String newId) {
 		// Start of user code constructor for Student)
-		super();
+		super(userSurname, userName, userLogin, userPwd);
+		this.studentId=newId;
 		// End of user code
 	}
 

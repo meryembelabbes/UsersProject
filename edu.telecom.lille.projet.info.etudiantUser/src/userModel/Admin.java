@@ -25,10 +25,10 @@ public class Admin extends User {
 	/**
 	 * The constructor.
 	 */
-	public Admin(String userSurname, String userName, String userLogin,String userPwd,String userId) {
+	public Admin(String userSurname, String userName, String userLogin,String userPwd,String newId) {
 		// Start of user code constructor for Admin)
 		super(userSurname,userName,userLogin,userPwd);
-		this.adminId = userId;
+		this.adminId = newId;
 		// End of user code
 	}
 

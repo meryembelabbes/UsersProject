@@ -17,6 +17,7 @@ public class Teacher extends User {
 	/**
 	 * Description of the property contrainteHoraires.
 	 */
+	
 	public HashSet<TimeConstraint> contrainteHoraires = new HashSet<TimeConstraint>();
 
 	/**
@@ -31,9 +32,10 @@ public class Teacher extends User {
 	/**
 	 * The constructor.
 	 */
-	public Teacher() {
+	public Teacher(String userSurname, String userName, String userLogin,String userPwd,String newId) {
 		// Start of user code constructor for Teacher)
-		super();
+		super(userSurname, userName, userLogin, userPwd);
+		this.teacherId = newId;
 		// End of user code
 	}
 
