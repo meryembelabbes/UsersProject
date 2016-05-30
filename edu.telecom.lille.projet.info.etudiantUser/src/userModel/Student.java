@@ -37,15 +37,6 @@ public class Student extends User {
 		this.studentId=newId;
 		// End of user code
 	}
-
-	/**
-	 * Description of the method getStudentGroup.
-	 */
-	public void getStudentGroup() {
-		// Start of user code for method getStudentGroup
-		// End of user code
-	}
-
 	// Start of user code (user defined methods for Student)
 
 	// End of user code
@@ -72,13 +63,4 @@ public class Student extends User {
 	public String getStudentGroupId() {
 		return this.studentGroupId;
 	}
-
-	/**
-	 * Sets a value to attribute studentGroupId. 
-	 * @param newStudentGroupId 
-	 */
-	public void setStudentGroupId(String newStudentGroupId) {
-		this.studentGroupId = newStudentGroupId;
-	}
-
 }

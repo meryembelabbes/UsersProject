@@ -31,66 +31,7 @@ public class Admin extends User {
 		this.adminId = newId;
 		// End of user code
 	}
-
-	/**
-	 * Description of the method addAdmin.
-	 */
-	public void addAdmin() {
-		// Start of user code for method addAdmin
-		// End of user code
-	}
-
-	/**
-	 * Description of the method addTeacher.
-	 */
-	public void addTeacher() {
-		// Start of user code for method addTeacher
-		// End of user code
-	}
-
-	/**
-	 * Description of the method addStudent.
-	 */
-	public void addStudent() {
-		// Start of user code for method addStudent
-		// End of user code
-	}
-
-	/**
-	 * Description of the method addGroup.
-	 */
-	public void addGroup() {
-		// Start of user code for method addGroup
-		// End of user code
-	}
-
-	/**
-	 * Description of the method removeUser.
-	 */
-	public void removeUser() {
-		// Start of user code for method removeUser
-		// End of user code
-	}
-
-	/**
-	 * Description of the method removeGroup.
-	 */
-	public void removeGroup() {
-		// Start of user code for method removeGroup
-		// End of user code
-	}
-
-	/**
-	 * Description of the method associateStudToGroup.
-	 */
-	public void associateStudToGroup() {
-		// Start of user code for method associateStudToGroup
-		// End of user code
-	}
-
-	// Start of user code (user defined methods for Admin)
-
-	// End of user code
+	
 	/**
 	 * Returns adminId.
 	 * @return adminId 
