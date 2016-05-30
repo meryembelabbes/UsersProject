@@ -2,7 +2,7 @@ package userController;
 
 /**
  * Cette classe est l'interface du contrôleur que vous devez implémenter. 
- * Elle contient un certains nombre de fonctions qui sont utilisées dans l'interface graphique. 
+ * Elle contient un certain nombre de fonctions qui sont utilisées dans l'interface graphique. 
  * Elle permet à cette dernière d'être indépendante par rapport à votre implémentation de la gestion des utilisateurs.
  * Cette classe doit être implémentée par la classe UserController qui devra implémenter les fonctions décrites ci-dessous.
  * 

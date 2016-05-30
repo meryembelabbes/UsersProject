@@ -3,6 +3,8 @@
  *******************************************************************************/
 package userModel;
 
+import java.util.HashSet;
+
 // Start of user code (user defined imports)
 
 // End of user code
@@ -16,22 +18,24 @@ public class User {
 	/**
 	 * Description of the property userSurname.
 	 */
-	public String userSurname = "";
+	public String userSurname;
 
 	/**
 	 * Description of the property UserName.
 	 */
-	public String UserName = "";
+	public String userName;
 
 	/**
 	 * Description of the property userLogin.
 	 */
-	public String userLogin = "";
+	public String userLogin;
 
 	/**
 	 * Description of the property userPwd.
 	 */
-	private String userPwd = "";
+	protected String userPwd;
+	
+	
 
 	/**
 	 * Description of the property userDBs.
@@ -45,9 +49,14 @@ public class User {
 	/**
 	 * The constructor.
 	 */
-	public User() {
+	public User(String userSurname, String userName, String userLogin,String userPwd ) {
 		// Start of user code constructor for User)
 		super();
+		this.userName=userName;
+		this.userSurname=userSurname;
+		this.userLogin=userLogin;
+		this.userPwd=userPwd;
+		
 		// End of user code
 	}
 
@@ -75,7 +84,7 @@ public class User {
 	 * @return UserName 
 	 */
 	public String getUserName() {
-		return this.UserName;
+		return this.userName;
 	}
 
 	/**
@@ -83,7 +92,7 @@ public class User {
 	 * @param newUserName 
 	 */
 	public void setUserName(String newUserName) {
-		this.UserName = newUserName;
+		this.userName = newUserName;
 	}
 
 	/**
