@@ -18,22 +18,22 @@ public class User {
 	/**
 	 * Description of the property userSurname.
 	 */
-	public String userSurname;
+	protected String userSurname = new String();
 
 	/**
 	 * Description of the property UserName.
 	 */
-	public String userName;
+	private String userName = new String();
 
 	/**
 	 * Description of the property userLogin.
 	 */
-	public String userLogin;
+	private String userLogin = new String();
 
 	/**
 	 * Description of the property userPwd.
 	 */
-	protected String userPwd;
+	private String userPwd = new String();
 	
 	
 
@@ -49,9 +49,9 @@ public class User {
 	/**
 	 * The constructor.
 	 */
-	public User(String userSurname, String userName, String userLogin,String userPwd ) {
+	public User(String userSurname, String userName, String userLogin,String userPwd) {
 		// Start of user code constructor for User)
-		super();
+		//super();
 		this.userName=userName;
 		this.userSurname=userSurname;
 		this.userLogin=userLogin;

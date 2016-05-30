@@ -17,8 +17,7 @@ public class Admin extends User {
 	/**
 	 * Description of the property adminId.
 	 */
-	public String adminId = "";
-
+	public String adminId;
 	// Start of user code (user defined attributes for Admin)
 
 	// End of user code
@@ -26,9 +25,10 @@ public class Admin extends User {
 	/**
 	 * The constructor.
 	 */
-	public Admin() {
+	public Admin(String userSurname, String userName, String userLogin,String userPwd,String userId) {
 		// Start of user code constructor for Admin)
-		super();
+		super(userSurname,userName,userLogin,userPwd);
+		this.adminId = userId;
 		// End of user code
 	}
 
