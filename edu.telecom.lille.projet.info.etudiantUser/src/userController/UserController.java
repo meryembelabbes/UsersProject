@@ -119,8 +119,21 @@ public class UserController implements IUserController
 
 	@Override
 	public String[] usersLoginToString() {
-		// TODO Auto-generated method stub
-		return null;
+		String[] studentsLogin = studentsLoginToString();
+		String[] adminsLogin = adminsLoginToString(); 
+		String[] teachersLogin = teachersLoginToString();
+		String[] usersLogin = new String[teachersLoginToString().length + adminsLogin.length + studentsLogin.length];
+
+		for (int i=0;i<adminsLogin.length;i++){
+			usersLogin[i] = adminsLogin[i];
+		}
+		for (int i=0;i<studentsLogin.length;i++){
+			usersLogin[i + adminsLogin.length] = studentsLogin[i];
+		}
+		for (int i=0;i<teachersLogin.length;i++){
+			usersLogin[i + adminsLogin.length + studentsLogin.length] = teachersLogin[i];
+		}
+		return usersLogin;
 	}
 
 	@Override
@@ -128,7 +141,16 @@ public class UserController implements IUserController
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private String[] adminsLoginToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	private String[] teachersLoginToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public String[] groupsIdToString() {
 		// TODO Auto-generated method stub
@@ -253,10 +275,9 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean saveDB() {
-		String[] userLogin = usersLoginToString();
-		String[] studentsLogin;
-		String[] adminsLogin; 
-		String[] teachersLogin; 
+		String[] studentsLogin = studentsLoginToString();
+		String[] adminsLogin = adminsLoginToString(); 
+		String[] teachersLogin = teachersLoginToString();
 		String[] groupsID = groupsIdToString();
 		
 		//Translation
@@ -316,7 +337,7 @@ public class UserController implements IUserController
 						userPwd.setText(getUserPwd(studentsLogin[i]));
 					student.addContent(userPwd);
 					Element studentID = new Element ("StudentID");
-						studentID.setText(getStudentID());
+						studentID.setText(getStudentID(studentsLogin[i]));
 					student.addContent(studentID);
 				students.addContent(student);
 			}
