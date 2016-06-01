@@ -11,6 +11,9 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import userModel.Admin;
+import userModel.Group;
+import userModel.Student;
+import userModel.Teacher;
 import userModel.UserDB;
 /**
  * Cette classe est le contrôleur d'utilisateurs que vous devez implémenter. 
@@ -137,49 +140,30 @@ public class UserController implements IUserController
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public boolean loadDB() {
+	private String getTeacherID(String teacherLogin) {
 		// TODO Auto-generated method stub
-		org.jdom2.Document document = null;
-		Element rootElt;
-		SAXBuilder sxb = new SAXBuilder();
-		try{
-			document = sxb.build(new File(UserDB.getFile()));
-		}catch(Exception e){}
-		if(document !=null){
-			rootElt = document.getRootElement();
-			List<Element> adminElts = rootElt.getChildren("Admin");
-			Iterator<Element> itAdmin = adminElts.iterator();
-			while (itAdmin.hasNext()){
-				Element unAdminElt = (Element)itAdmin.next();
-				String userLogin = unAdminElt.getChildText("userLogin").getText();
-				String userName = unAdminElt.getChildText("userName").getText();
-				String userSurname = unAdminElt.getChildText("userSurname").getText();
-				String userPwd = unAdminElt.getChildText("userPwd").getText();
-				String adminID= unAdminElt.getChildText("adminID").getText();
-				Admin Userlogin = new Admin (userSurname,userName,userLogin,userPwd,adminID);
-				userDB.hm.put(userLogin,Userlogin);
-			}
-		}
-		return false;
+		return null;
 	}
 
-	@Override
-	public boolean saveDB() {
+	private String getStudentID(String studentLogin) {
 		// TODO Auto-generated method stub
-		org.jdom2.Document document = null;
-		
-		try{
-			XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-			sortie.output(document, new FileOutputStream(UserDB.getFile()));
-			}catch (java.io.IOException e){}
-		
-		
-		
-		return false;
+		return null;
 	}
 
+	private String getAdminID(String adminLogin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String getUserPwd(String userLogin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String getUserSurname(String userLogin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	public UserDB getUserDB() {
 		return userDB;
 	}
@@ -188,8 +172,184 @@ public class UserController implements IUserController
 		this.userDB = userDB;
 
 	}
-	
-	
 
+	@Override
+	public boolean loadDB() {
+		//Creation
+		
+		org.jdom2.Document document = null;
+		Element rootElt;
+		
+		//Read
+		
+		SAXBuilder sxb = new SAXBuilder();
+		try{
+			document = sxb.build(new File(UserDB.getFile()));
+		}catch(Exception e){}
+		
+		//Translation
+		
+		if(document !=null){
+			rootElt = document.getRootElement();
+			
+			//class admin
+			
+			List<Element> adminElts = rootElt.getChildren("Admin");
+			Iterator<Element> itAdmin = adminElts.iterator();
+			while (itAdmin.hasNext()){
+				Element adminElt = (Element)itAdmin.next();
+				String userLogin = adminElt.getChild("UserLogin").getText();
+				String userName = adminElt.getChild("UserName").getText();
+				String userSurname = adminElt.getChild("UserSurname").getText();
+				String userPwd = adminElt.getChild("UserPwd").getText();
+				String adminID= adminElt.getChild("AdminID").getText();
+				Admin AdminID = new Admin (userSurname,userName,userLogin,userPwd,adminID);
+				userDB.hm.put(userLogin,AdminID);
+			}
+			
+			//class student
+			
+			List<Element> studentElts = rootElt.getChildren("Student");
+			Iterator<Element> itStudent = studentElts.iterator();
+			while (itStudent.hasNext()){
+				Element studentElt = (Element)itStudent.next();
+				String userLogin = studentElt.getChild("UserLogin").getText();
+				String userName = studentElt.getChild("UserName").getText();
+				String userSurname = studentElt.getChild("UserSurname").getText();
+				String userPwd = studentElt.getChild("UserPwd").getText();
+				String studentID= studentElt.getChild("StudentID").getText();
+				Student StudentID = new Student (userSurname,userName,userLogin,userPwd,studentID);
+				userDB.hm.put(userLogin,StudentID);
+			}
+			
+			//class teacher
+			
+			List<Element> teacherElts = rootElt.getChildren("Teacher");
+			Iterator<Element> itTeacher = teacherElts.iterator();
+			while (itTeacher.hasNext()){
+				Element teacherElt = (Element)itTeacher.next();
+				String userLogin = teacherElt.getChild("UserLogin").getText();
+				String userName = teacherElt.getChild("UserName").getText();
+				String userSurname = teacherElt.getChild("UserSurname").getText();
+				String userPwd = teacherElt.getChild("UserPwd").getText();
+				String teacherID= teacherElt.getChild("TeacherID").getText();
+				Teacher TeacherID = new Teacher (userSurname,userName,userLogin,userPwd,teacherID);
+				userDB.hm.put(userLogin,TeacherID);
+			}
+			
+			//group
+			
+			List<Element> groupElts = rootElt.getChildren("Group");
+			Iterator<Element> itGroup = groupElts.iterator();
+			while (itGroup.hasNext()){
+				Element groupElt = (Element)itAdmin.next();
+				String userLogin = groupElt.getChild("GroupID").getText();
+				Group GroupID = new Group ();
+				userDB.hg.put(userLogin,GroupID);
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean saveDB() {
+		String[] userLogin = usersLoginToString();
+		String[] studentsLogin;
+		String[] adminsLogin; 
+		String[] teachersLogin; 
+		String[] groupsID = groupsIdToString();
+		
+		//Translation
+		Element rootElt = new Element ("UserBD");
+		Document document = new Document(rootElt);
+			Element groups = new Element ("Groups");
+			//Loop for groups
+			for(int i = 0; i<groupsID.length; i++) { 
+				Element group = new Element ("Group");
+					Element groupID = new Element("GroupID"); 
+						groupID.setText(groupsID[i]);
+					group.addContent(groupID);
+					 
+					
+					
+				groups.addContent(group);
+			}
+			rootElt.addContent(groups);
+			
+			Element admins = new Element("Admins");
+			//Loop for admins
+			for (int i = 0; i<adminsLogin.length; i++) {
+				Element admin = new Element ("Admin");
+					Element userLogin = new Element ("UserLogin");
+						userLogin.setText(adminsLogin[i]);
+					admin.addContent(userLogin);
+					Element userName = new Element ("UserName");
+						userName.setText(getUserName(adminsLogin[i]));
+					admin.addContent(userName);
+					Element userSurname = new Element ("UserSurname");
+						userSurname.setText(getUserSurname(adminsLogin[i]));
+					admin.addContent(userSurname);
+					Element userPwd = new Element ("UserPwd");
+						userPwd.setText(getUserPwd(adminsLogin[i]));
+					admin.addContent(userPwd);
+					Element adminID = new Element ("AdminID");
+						adminID.setText(getAdminID(adminsLogin[i]));
+					admin.addContent(adminID);
+				admins.addContent(admin);
+			}
+			rootElt.addContent(admins);
+			
+			Element students = new Element ("Student");
+			//Loop for students
+			for (int i = 0; i<studentsLogin.length; i++) {
+				Element student = new Element ("Student");
+					Element userLogin = new Element ("UserLogin");
+						userLogin.setText(studentsLogin[i]);
+					student.addContent(userLogin);
+					Element userName = new Element ("UserName");
+						userName.setText(getUserName(studentsLogin[i]));
+					student.addContent(userName);
+					Element userSurname = new Element ("UserSurname");
+						userSurname.setText(getUserSurname(studentsLogin[i]));
+					student.addContent(userSurname);
+					Element userPwd = new Element ("UserPwd");
+						userPwd.setText(getUserPwd(studentsLogin[i]));
+					student.addContent(userPwd);
+					Element studentID = new Element ("StudentID");
+						studentID.setText(getStudentID());
+					student.addContent(studentID);
+				students.addContent(student);
+			}
+			rootElt.addContent(students);
+			
+			Element teachers = new Element ("Teachers");
+			//Loop for teachers
+			for (int i = 0; i<teachersLogin.length; i++) {
+				Element teacher = new Element ("Teacher");
+					Element userLogin = new Element ("UserLogin");
+						userLogin.setText(teachersLogin[i]);
+					teacher.addContent(userLogin);
+					Element userName = new Element ("UserName");
+						userName.setText(getUserName(teachersLogin[i]));
+					teacher.addContent(userName);
+					Element userSurname = new Element ("UserSurname");
+						userSurname.setText(getUserSurname(teachersLogin[i]));
+					teacher.addContent(userSurname);
+					Element userPwd = new Element ("UserPwd");
+						userPwd.setText(getUserPwd(teachersLogin[i]));
+					teacher.addContent(userPwd);
+					Element teacherID = new Element ("TeacherID");
+						teacherID.setText(getTeacherID(teachersLogin[i]));
+					teacher.addContent(teacherID);
+				teachers.addContent(teacher);
+			}
+			rootElt.addContent(teachers);
+			//Write
+			try{
+				XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+				sortie.output(document, new FileOutputStream(UserDB.getFile()));
+			}catch (java.io.IOException e){}
+		return false;
+	}
 }
 

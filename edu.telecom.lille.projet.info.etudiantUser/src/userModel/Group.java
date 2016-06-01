@@ -88,8 +88,4 @@ public class Group {
 	 * Returns userDBs.
 	 * @return userDBs 
 	 */
-	public HashSet<UserDB> getUserDBs() {
-		return this.userDBs;
-	}
-
 }

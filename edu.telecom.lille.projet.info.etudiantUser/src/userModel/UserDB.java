@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 public class UserDB {
 	public HashMap<String,User> hm = new HashMap<String,User>();
+	public HashMap<String, Group> hg = new HashMap<String,Group>();
 	/**
 	 * 
 	 * Le fichier contenant la base de données.
