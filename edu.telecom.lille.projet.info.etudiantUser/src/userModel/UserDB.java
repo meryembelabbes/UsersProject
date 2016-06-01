@@ -1,5 +1,7 @@
 package userModel;
 
+import java.util.HashMap;
+
 /**
  * 
  * Cette classe gére la base de données d'utilisateurs. Elle doit permettre de sauvegarder et charger les utilisateurs et les groupes à partir d'un fichier XML. 
@@ -14,13 +16,13 @@ package userModel;
 //TODO Classe à modifier
 
 public class UserDB {
-	
+	public HashMap<String,User> hm = new HashMap<String,User>();
 	/**
 	 * 
 	 * Le fichier contenant la base de données.
 	 * 
 	 */
-	private String file;
+	private static String file;
 	
 	/**
 	 * 
@@ -28,13 +30,14 @@ public class UserDB {
 	 * 
 	 * !!!!!!!!!!!! PENSEZ À AJOUTER UN ADMINISTRATEUR (su par exemple) QUI VOUS PERMETTRA DE CHARGER LA BASE DE DONNÉES AU DEMARRAGE DE L'APPLICATION !!!!!!
 	 * 
-	 * @param file
+	 * @param file2
 	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	public UserDB(String file){
 		//TODO Fonction à modifier
 		super();
 		this.setFile(file);
+		Admin su = new Admin("su","admin","admin","admin","admin");
 	}
 	
 	/**
@@ -44,10 +47,9 @@ public class UserDB {
 	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	
-	public String getFile() {
+	public static String getFile() {
 		return file;
 	}
-	
 	/**
 	 * Setter de file
 	 * 
@@ -56,6 +58,6 @@ public class UserDB {
 	 */
 	
 	public void setFile(String file) {
-		this.file = file;
+		UserDB.file = file;
 	}
 }

@@ -30,14 +30,7 @@ public class Group {
 	 */
 	public Integer NbStud = Integer.valueOf(0);
 
-	/**
-	 * Description of the property userDBs.
-	 */
-	public HashSet<UserDB> userDBs = new HashSet<UserDB>();
 
-	// Start of user code (user defined attributes for Group)
-
-	// End of user code
 
 	/**
 	 * The constructor.
