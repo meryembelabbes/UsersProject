@@ -32,10 +32,9 @@ public class Teacher extends User {
 	/**
 	 * The constructor.
 	 */
-	public Teacher(String userSurname, String userName, String userLogin,String userPwd,String newId) {
+	public Teacher(String userSurname, String userName, String userLogin,String userPwd,int userId) {
 		// Start of user code constructor for Teacher)
-		super(userSurname, userName, userLogin, userPwd);
-		this.teacherId = newId;
+		super(userSurname, userName, userLogin, userPwd, userId);
 		// End of user code
 	}
 

@@ -16,8 +16,8 @@ import java.util.HashMap;
 //TODO Classe à modifier
 
 public class UserDB {
-	public HashMap<String,User> hm = new HashMap<String,User>();
-	public HashMap<String, Group> hg = new HashMap<String,Group>();
+	public HashMap<String, User> hm = new HashMap<String,User>();
+	public HashMap<String,Group> hg = new HashMap<String,Group>();
 	/**
 	 * 
 	 * Le fichier contenant la base de données.
@@ -38,7 +38,8 @@ public class UserDB {
 		//TODO Fonction à modifier
 		super();
 		this.setFile(file);
-		Admin su = new Admin("su","admin","admin","admin","admin");
+		@SuppressWarnings("unused")
+		Admin su = new Admin("su","admin","admin","admin",0000);
 	}
 	
 	/**

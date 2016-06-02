@@ -31,31 +31,15 @@ public class Student extends User {
 	/**
 	 * The constructor.
 	 */
-	public Student(String userSurname, String userName, String userLogin,String userPwd, String newId) {
+	public Student(String userSurname, String userName, String userLogin,String userPwd, int userId) {
 		// Start of user code constructor for Student)
-		super(userSurname, userName, userLogin, userPwd);
-		this.studentId=newId;
+		super(userSurname, userName, userLogin, userPwd, userId);
 		// End of user code
 	}
 	// Start of user code (user defined methods for Student)
 
 	// End of user code
-	/**
-	 * Returns studentId.
-	 * @return studentId 
-	 */
-	public String getStudentId() {
-		return this.studentId;
-	}
-
-	/**
-	 * Sets a value to attribute studentId. 
-	 * @param newStudentId 
-	 */
-	public void setStudentId(String newStudentId) {
-		this.studentId = newStudentId;
-	}
-
+	
 	/**
 	 * Returns studentGroupId.
 	 * @return studentGroupId 

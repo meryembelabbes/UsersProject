@@ -23,12 +23,12 @@ public class Main {
 	public static void main(String[] args) {
 		final String file="usersDB.xml";
 		UserController UC=new UserController(file);
-		UC.addAdmin("su","KF",0001,"Kevin", "Flynn",  "@tron");
-		UC.addAdmin("su","KR",0002,"Keanu", "Reeves",  "redpill");
-		UC.addTeacher("su","GS",1001,"Grand", "Schtroumpf",  "salsepareille");
-		UC.addTeacher("su","MF",1002,"Morgan", "Freeman",  "iknowall");
-		UC.addStudent("su","BS",2001,"Buffy", "Summers",  "stake");
-		UC.addStudent("su","NL",2002,"Nicolas", "Lepetit",  "prout");
+		UC.addAdmin("su","KF",9001,"Kevin", "Flynn",  "@tron");
+		UC.addAdmin("su","KR",9002,"Keanu", "Reeves",  "redpill");
+		UC.addTeacher("su","GS",8001,"Grand", "Schtroumpf",  "salsepareille");
+		UC.addTeacher("su","MF",8002,"Morgan", "Freeman",  "iknowall");
+		UC.addStudent("su","BS",0001,"Buffy", "Summers",  "stake");
+		UC.addStudent("su","NL",0002,"Nicolas", "Lepetit",  "prout");
 		UC.saveDB();
 	}
 }
