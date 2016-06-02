@@ -18,7 +18,7 @@ public class Teacher extends User {
 	 * Description of the property contrainteHoraires.
 	 */
 	
-	public HashSet<TimeConstraint> contrainteHoraires = new HashSet<TimeConstraint>();
+//	public HashSet<TimeConstraint> contrainteHoraires = new HashSet<TimeConstraint>();
 
 	/**
 	 * Description of the property teacherId.
@@ -46,9 +46,9 @@ public class Teacher extends User {
 	 * Returns contrainteHoraires.
 	 * @return contrainteHoraires 
 	 */
-	public HashSet<TimeConstraint> getContrainteHoraires() {
-		return this.contrainteHoraires;
-	}
+//	public HashSet<TimeConstraint> getContrainteHoraires() {
+//		return this.contrainteHoraires;
+//	}
 
 	/**
 	 * Returns teacherId.

@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.print.DocFlavor.STRING;
+
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -67,23 +69,35 @@ public class UserController implements IUserController
 	}
 
 	@Override
-	public boolean addAdmin(String adminLogin, String newAdminlogin, int adminID, String firstname, String surname,
+	public boolean addAdmin(String adminLogin, String newAdminlogin, int ID, String firstname, String surname,
 			String pwd) {
-		// TODO Auto-generated method stub
+		
+		String adminID = Integer.toString(ID); 
+		Admin userLogin = new Admin (newAdminlogin, adminID, firstname, surname, pwd);
+		userDB.hm.put(newAdminlogin,userLogin);
+		
 		return false;
 	}
 
 	@Override
-	public boolean addTeacher(String adminLogin, String newteacherLogin, int teacherID, String firstname,
+	public boolean addTeacher(String adminLogin, String newteacherLogin, int ID, String firstname,
 			String surname, String pwd) {
-		// TODO Auto-generated method stub
+		
+		String teacherID = Integer.toString(ID); 
+		Teacher userLogin = new Teacher (newteacherLogin, teacherID, firstname, surname, pwd);
+		userDB.hm.put(newteacherLogin,userLogin);
+		
 		return false;
 	}
 
 	@Override
-	public boolean addStudent(String adminLogin, String newStudentLogin, int studentID, String firstname,
+	public boolean addStudent(String adminLogin, String newStudentLogin, int ID, String firstname,
 			String surname, String pwd) {
-		// TODO Auto-generated method stub
+		
+		String studentID = Integer.toString(ID); 
+		Teacher userLogin = new Teacher (newStudentLogin, studentID, firstname, surname, pwd);
+		userDB.hm.put(newStudentLogin,userLogin);
+		
 		return false;
 	}
 
@@ -119,26 +133,13 @@ public class UserController implements IUserController
 
 	@Override
 	public String[] usersLoginToString() {
-		String[] studentsLogin = studentsLoginToString();
-		String[] adminsLogin = adminsLoginToString(); 
-		String[] teachersLogin = teachersLoginToString();
-		String[] usersLogin = new String[teachersLoginToString().length + adminsLogin.length + studentsLogin.length];
-
-		for (int i=0;i<adminsLogin.length;i++){
-			usersLogin[i] = adminsLogin[i];
-		}
-		for (int i=0;i<studentsLogin.length;i++){
-			usersLogin[i + adminsLogin.length] = studentsLogin[i];
-		}
-		for (int i=0;i<teachersLogin.length;i++){
-			usersLogin[i + adminsLogin.length + studentsLogin.length] = teachersLogin[i];
-		}
+		
 		return usersLogin;
 	}
 
 	@Override
 	public String[] studentsLoginToString() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	
@@ -278,24 +279,24 @@ public class UserController implements IUserController
 		String[] studentsLogin = studentsLoginToString();
 		String[] adminsLogin = adminsLoginToString(); 
 		String[] teachersLogin = teachersLoginToString();
-		String[] groupsID = groupsIdToString();
+//		String[] groupsID = groupsIdToString();
 		
 		//Translation
 		Element rootElt = new Element ("UserBD");
 		Document document = new Document(rootElt);
-			Element groups = new Element ("Groups");
-			//Loop for groups
-			for(int i = 0; i<groupsID.length; i++) { 
-				Element group = new Element ("Group");
-					Element groupID = new Element("GroupID"); 
-						groupID.setText(groupsID[i]);
-					group.addContent(groupID);
-					 
-					
-					
-				groups.addContent(group);
-			}
-			rootElt.addContent(groups);
+//			Element groups = new Element ("Groups");
+//			//Loop for groups
+//			for(int i = 0; i<groupsID.length; i++) { 
+//				Element group = new Element ("Group");
+//					Element groupID = new Element("GroupID"); 
+//						groupID.setText(groupsID[i]);
+//					group.addContent(groupID);
+//					 
+//					
+//					
+//				groups.addContent(group);
+//			}
+//			rootElt.addContent(groups);
 			
 			Element admins = new Element("Admins");
 			//Loop for admins
