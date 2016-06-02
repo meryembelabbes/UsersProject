@@ -226,6 +226,7 @@ public class UserController implements IUserController
 		
 		if(document !=null){
 			rootElt = document.getRootElement();
+			//TODO class group
 			
 			//class admin
 			
@@ -234,12 +235,12 @@ public class UserController implements IUserController
 			
 			while (itAdmin.hasNext()){
 				Element adminElt = (Element)itAdmin.next();
-				String userLogin = adminElt.getChild("UserLogin").getText();
-				String userName = adminElt.getChild("UserName").getText();
-				String userSurname = adminElt.getChild("UserSurname").getText();
-				String userPwd = adminElt.getChild("UserPwd").getText();
-				String id = adminElt.getChild("AdminID").getText();
-				int adminId = Integer.parseInt(id);
+					String userLogin = adminElt.getChild("UserLogin").getText();
+					String userName = adminElt.getChild("UserName").getText();
+					String userSurname = adminElt.getChild("UserSurname").getText();
+					String userPwd = adminElt.getChild("UserPwd").getText();
+					String id = adminElt.getChild("AdminID").getText();
+					int adminId = Integer.parseInt(id);
 				Admin AdminID = new Admin (userSurname,userName,userLogin,userPwd,adminId);
 				userDB.hm.put(userLogin,AdminID);
 			}
@@ -251,12 +252,12 @@ public class UserController implements IUserController
 			
 			while (itStudent.hasNext()){
 				Element studentElt = (Element)itStudent.next();
-				String userLogin = studentElt.getChild("UserLogin").getText();
-				String userName = studentElt.getChild("UserName").getText();
-				String userSurname = studentElt.getChild("UserSurname").getText();
-				String userPwd = studentElt.getChild("UserPwd").getText();
-				String id = studentElt.getChild("StudentID").getText();
-				int studentId = Integer.parseInt(id);
+					String userLogin = studentElt.getChild("UserLogin").getText();
+					String userName = studentElt.getChild("UserName").getText();
+					String userSurname = studentElt.getChild("UserSurname").getText();
+					String userPwd = studentElt.getChild("UserPwd").getText();
+					String id = studentElt.getChild("StudentID").getText();
+					int studentId = Integer.parseInt(id);
 				Student StudentID = new Student (userSurname,userName,userLogin,userPwd,studentId);
 				userDB.hm.put(userLogin,StudentID);
 			}
@@ -268,12 +269,12 @@ public class UserController implements IUserController
 			
 			while (itTeacher.hasNext()){
 				Element teacherElt = (Element)itTeacher.next();
-				String userLogin = teacherElt.getChild("UserLogin").getText();
-				String userName = teacherElt.getChild("UserName").getText();
-				String userSurname = teacherElt.getChild("UserSurname").getText();
-				String userPwd = teacherElt.getChild("UserPwd").getText();
-				String id = teacherElt.getChild("TeacherID").getText();
-				int teacherId = Integer.parseInt(id);
+					String userLogin = teacherElt.getChild("UserLogin").getText();
+					String userName = teacherElt.getChild("UserName").getText();
+					String userSurname = teacherElt.getChild("UserSurname").getText();
+					String userPwd = teacherElt.getChild("UserPwd").getText();
+					String id = teacherElt.getChild("TeacherID").getText();
+					int teacherId = Integer.parseInt(id);
 				Teacher TeacherID = new Teacher (userSurname,userName,userLogin,userPwd,teacherId);
 				userDB.hm.put(userLogin,TeacherID);
 			}
