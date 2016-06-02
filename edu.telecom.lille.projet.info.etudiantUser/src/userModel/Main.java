@@ -27,9 +27,14 @@ public class Main {
 		UC.addTeacher("su","MF",8002,"Morgan", "Freeman",  "iknowall");
 		UC.addStudent("su","BS",0001,"Buffy", "Summers",  "stake");
 		UC.addStudent("su","NL",0002,"Nicolas", "Lepetit",  "prout");
-		UC.saveDB();
-		UC.loadDB();
+//		UC.saveDB();
+//		UC.loadDB();
 		UC.addStudent("su", "BT", 0003, "Thibaud", "Blondin", "zboub");
+		UC.addGroup("su",0001);
+		UC.addGroup("su",0002);
+		UC.associateStudToGroup("su", "BT", 0001);
+		UC.associateStudToGroup("su", "BS", 0001);
+		UC.associateStudToGroup("su", "NL", 0002);
 		UC.saveDB();
 	}
 }

@@ -23,12 +23,12 @@ public class Group {
 	/**
 	 * Description of the property students.
 	 */
-	public HashSet<Student> students = new HashSet<Student>();
+	public HashSet<String> students = new HashSet<String>();
 
 	/**
 	 * Description of the property NbStud.
 	 */
-	public Integer NbStud = Integer.valueOf(0);
+	public Integer NbStud = students.size();
 
 
 
@@ -65,9 +65,6 @@ public class Group {
 	 * Returns students.
 	 * @return students 
 	 */
-	public HashSet<Student> getStudents() {
-		return this.students;
-	}
 
 	/**
 	 * Returns NbStud.

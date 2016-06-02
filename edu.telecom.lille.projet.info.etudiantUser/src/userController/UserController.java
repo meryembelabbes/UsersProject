@@ -79,7 +79,7 @@ public class UserController implements IUserController
 			return groupid;
 		}
 		else {
-			return 0;
+			return -1;
 		}
 	}
 
@@ -115,25 +115,40 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
-		// TODO Auto-generated method stub
+		// TODO 
+		userDB.hm.remove(userLogin);
 		return false;
 	}
 
 	@Override
 	public boolean addGroup(String adminLogin, int groupId) {
-		// TODO Auto-generated method stub
+		// TODO 
+			String id = String.valueOf(groupId);
+			Group group = new Group(id);
+			userDB.hg.put(id,group);
 		return false;
 	}
 
 	@Override
 	public boolean removeGroup(String adminLogin, int groupId) {
-		// TODO Auto-generated method stub
+		// TODO 
+			userDB.hg.remove(groupId);
 		return false;
 	}
 
 	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
-		// TODO Auto-generated method stub
+		// TODO
+		Group group = userDB.hg.get(groupId);
+		if (group!=null){
+			group.students.add(studentLogin);
+		
+			Student student = (Student) userDB.hm.get(studentLogin);
+			if (student!=null){
+			student.studentGroupId = String.valueOf(groupId);
+			return true;
+			}
+		}
 		return false;
 	}
 
@@ -143,6 +158,12 @@ public class UserController implements IUserController
 		return null;
 	}
 
+	@Override
+	public String[] groupsToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public String[] usersLoginToString() {
 		Set<String> key = userDB.hm.keySet();
@@ -211,12 +232,6 @@ public class UserController implements IUserController
 		return groupId;
 	}
 
-	@Override
-	public String[] groupsToString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public UserDB getUserDB() {
 		return userDB;
 	}
@@ -240,11 +255,10 @@ public class UserController implements IUserController
 			document = sxb.build(new File(UserDB.getFile()));
 		}catch(Exception e){}
 		
-		//Translation
+		//Conversion
 		
 		if(document !=null){
 			rootElt = document.getRootElement();
-			//TODO class group
 			
 			List<Element> groupElts = rootElt.getChildren("Group");
 			Iterator<Element> itGroup = groupElts.iterator();
@@ -252,10 +266,18 @@ public class UserController implements IUserController
 			while (itGroup.hasNext()){
 				Element groupElt = (Element)itGroup.next();
 					String groupId = groupElt.getChild("GroupId").getText();
-
-				Group Group = new Group (groupId);
-				userDB.hg.put(groupId,Group);
+				Group group = new Group (groupId);
+				userDB.hg.put(groupId,group);
+					
+				List<Element> groupStudentElts = groupElt.getChildren("GroupStudent");
+				Iterator<Element> itgroupStudent = groupStudentElts.iterator();
+					
+				while (itgroupStudent.hasNext()){
+						Element groupStudentElt = (Element)itgroupStudent.next();
+							String groupStudentLogin = groupStudentElt.getText();
+						group.students.add(groupStudentLogin);	
 				}
+			}
 			
 			//class admin
 			
@@ -335,7 +357,16 @@ public class UserController implements IUserController
 						Element group = new Element ("Group");
 							Element groupID = new Element("GroupID"); 
 								groupID.setText(user.getGroupId());
-							group.addContent(groupID);	
+							group.addContent(groupID);
+							Element groupStudents = new Element ("GroupStudents");
+								Iterator<String> itgroupStudent = user.students.iterator();
+								while (itgroupStudent.hasNext()){
+									String groupstudentlog = itgroupStudent.next();
+									Element groupStudent = new Element ("GroupStudent");
+										groupStudent.setText(groupstudentlog);
+									groupStudents.addContent(groupStudent);
+								}
+								group.addContent(groupStudents);
 						groups.addContent(group);
 					}
 				}

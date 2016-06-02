@@ -47,4 +47,7 @@ public class Student extends User {
 	public String getStudentGroupId() {
 		return this.studentGroupId;
 	}
+	public void setStudentGroupId( String newstudentGroupId) {
+		this.studentGroupId = newstudentGroupId;
+	}
 }
