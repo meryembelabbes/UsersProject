@@ -24,8 +24,6 @@ import userModel.*;
  * 
  */
 
-//TODO Classe à modifier
-
 public class UserController implements IUserController
 {
 	
@@ -55,14 +53,34 @@ public class UserController implements IUserController
 
 	@Override
 	public String getUserClass(String userLogin, String userPwd) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userDB.hm.get(userLogin);
+		if (user != null&&userPwd == user.getUserPwd()){
+			if (user.getUserId()<8001){
+				return "Student";
+			}
+			else if (user.getUserId()<9001){
+				return "Teacher";
+			}
+			else {
+				return "Administrator";
+				}
+			}
+		else {	
+			return "";
+		}
 	}
 
 	@Override
-	public int getStudentGroup(String studentLogin) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getStudentGroup(String studentLogin){
+		User user = userDB.hm.get(studentLogin);
+		String studentPwd = user.getUserPwd();
+		if (getUserClass(studentLogin,studentPwd)=="Student"){
+			int groupid = Integer.parseInt(((Student) user).getStudentGroupId());
+			return groupid;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -228,10 +246,23 @@ public class UserController implements IUserController
 			rootElt = document.getRootElement();
 			//TODO class group
 			
+			List<Element> groupElts = rootElt.getChildren("Group");
+			Iterator<Element> itGroup = groupElts.iterator();
+			
+			while (itGroup.hasNext()){
+				Element groupElt = (Element)itGroup.next();
+					String groupId = groupElt.getChild("GroupId").getText();
+
+				Group Group = new Group (groupId);
+				userDB.hg.put(groupId,Group);
+				}
+			
 			//class admin
 			
 			List<Element> adminElts = rootElt.getChildren("Admin");
 			Iterator<Element> itAdmin = adminElts.iterator();
+			
+			
 			
 			while (itAdmin.hasNext()){
 				Element adminElt = (Element)itAdmin.next();
@@ -241,8 +272,8 @@ public class UserController implements IUserController
 					String userPwd = adminElt.getChild("UserPwd").getText();
 					String id = adminElt.getChild("AdminID").getText();
 					int adminId = Integer.parseInt(id);
-				Admin AdminID = new Admin (userSurname,userName,userLogin,userPwd,adminId);
-				userDB.hm.put(userLogin,AdminID);
+				Admin Admin = new Admin (userSurname,userName,userLogin,userPwd,adminId);
+				userDB.hm.put(userLogin,Admin);
 			}
 			
 			//class student
@@ -258,8 +289,8 @@ public class UserController implements IUserController
 					String userPwd = studentElt.getChild("UserPwd").getText();
 					String id = studentElt.getChild("StudentID").getText();
 					int studentId = Integer.parseInt(id);
-				Student StudentID = new Student (userSurname,userName,userLogin,userPwd,studentId);
-				userDB.hm.put(userLogin,StudentID);
+				Student Student = new Student (userSurname,userName,userLogin,userPwd,studentId);
+				userDB.hm.put(userLogin,Student);
 			}
 			
 			//class teacher
@@ -277,18 +308,6 @@ public class UserController implements IUserController
 					int teacherId = Integer.parseInt(id);
 				Teacher TeacherID = new Teacher (userSurname,userName,userLogin,userPwd,teacherId);
 				userDB.hm.put(userLogin,TeacherID);
-			}
-			
-			//group
-			
-			List<Element> groupElts = rootElt.getChildren("Group");
-			Iterator<Element> itGroup = groupElts.iterator();
-			
-			while (itGroup.hasNext()){
-				Element groupElt = (Element)itAdmin.next();
-				String userLogin = groupElt.getChild("GroupID").getText();
-				Group GroupID = new Group ();
-				userDB.hg.put(userLogin,GroupID);
 			}
 		}
 		return false;
