@@ -35,9 +35,10 @@ public class Group {
 	/**
 	 * The constructor.
 	 */
-	public Group() {
+	public Group(String groupId) {
 		// Start of user code constructor for Group)
 		super();
+		this.groupId=groupId;
 		// End of user code
 	}
 

@@ -10,8 +10,6 @@ import userController.UserController;
  * 
  */
 
-//TODO Classe pouvant être modifiée suivant vos besoins
-
 public class Main {
 	/**
 	 * Fonction principale 
