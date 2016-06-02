@@ -354,7 +354,7 @@ public class UserController implements IUserController
 			//Loop for students
 			
 			if (studentsLogin[1]!=null){
-				Element students = new Element ("Student");
+				Element students = new Element ("Students");
 				for (int i = 0; i<studentsLogin.length; i++) {
 					Student user = (Student) userDB.hm.get(studentsLogin[i]);
 					if (user!=null){

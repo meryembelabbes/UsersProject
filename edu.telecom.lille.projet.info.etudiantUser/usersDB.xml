@@ -16,7 +16,7 @@
       <AdminID>9001</AdminID>
     </Admin>
   </Admins>
-  <Student>
+  <Students>
     <Student>
       <UserLogin>BS</UserLogin>
       <UserName>Buffy</UserName>
@@ -25,13 +25,20 @@
       <StudentID>1</StudentID>
     </Student>
     <Student>
+      <UserLogin>BT</UserLogin>
+      <UserName>Thibaud</UserName>
+      <UserSurname>Blondin</UserSurname>
+      <UserPwd>zboub</UserPwd>
+      <StudentID>3</StudentID>
+    </Student>
+    <Student>
       <UserLogin>NL</UserLogin>
       <UserName>Nicolas</UserName>
       <UserSurname>Lepetit</UserSurname>
       <UserPwd>prout</UserPwd>
       <StudentID>2</StudentID>
     </Student>
-  </Student>
+  </Students>
   <Teachers>
     <Teacher>
       <UserLogin>MF</UserLogin>

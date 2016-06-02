@@ -30,5 +30,8 @@ public class Main {
 		UC.addStudent("su","BS",0001,"Buffy", "Summers",  "stake");
 		UC.addStudent("su","NL",0002,"Nicolas", "Lepetit",  "prout");
 		UC.saveDB();
+		UC.loadDB();
+		UC.addStudent("su", "BT", 0003, "Thibaud", "Blondin", "zboub");
+		UC.saveDB();
 	}
 }
