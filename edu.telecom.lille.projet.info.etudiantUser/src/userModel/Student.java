@@ -17,7 +17,7 @@ public class Student extends User {
 	/**
 	 * Description of the property studentGroupId.
 	 */
-	public String studentGroupId = "0";
+	private String studentGroupId = "0";
 
 	// Start of user code (user defined attributes for Student)
 
@@ -45,4 +45,5 @@ public class Student extends User {
 	public void setStudentGroupId( String newstudentGroupId) {
 		this.studentGroupId = newstudentGroupId;
 	}
+	
 }

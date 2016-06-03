@@ -27,9 +27,9 @@ public class Main {
 		UC.addTeacher("su","MF",8002,"Morgan", "Freeman",  "iknowall");
 		UC.addStudent("su","BS",0001,"Buffy", "Summers",  "stake");
 		UC.addStudent("su","NL",0002,"Nicolas", "Lepetit",  "prout");
-//		UC.saveDB();
-//		UC.loadDB();
-		UC.addStudent("su", "BT", 0003, "Thibaud", "Blondin", "zboub");
+		UC.usersToString();
+		UC.groupsToString();
+		UC.addStudent("su", "BT", 0003, "Thibaud", "Blondin", "azerty");
 		UC.addGroup("su",0001);
 		UC.addGroup("su",0002);
 		UC.associateStudToGroup("su", "BT", 0001);
@@ -39,5 +39,10 @@ public class Main {
 		UC.loadDB();
 		UC.usersToString();
 		UC.groupsToString();
+		UC.removeGroup("su", 0002);
+		UC.removeUser("su","BT");
+		UC.usersToString();
+		UC.groupsToString();
+		UC.saveDB();
 	}
 }

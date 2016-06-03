@@ -2,6 +2,7 @@ package userController;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -47,13 +48,13 @@ public class UserController implements IUserController
 
 	@Override
 	public String getUserName(String userLogin) {
-			User user = userDB.hm.get(userLogin);
-		return user.getUserName();
+			User user = userDB.getUser(userLogin);
+		return user.getUserName() +" "+ user.getUserSurname();
 	}
 
 	@Override
 	public String getUserClass(String userLogin, String userPwd) {
-		User user = userDB.hm.get(userLogin);
+		User user = userDB.getUser(userLogin);
 		if (user != null&&userPwd == user.getUserPwd()){
 			if (user.getUserId()>0&&user.getUserId()<8001){
 				return "Student";
@@ -70,8 +71,8 @@ public class UserController implements IUserController
 
 	@Override
 	public int getStudentGroup(String studentLogin){
-		if (userDB.hm.containsKey(studentLogin)){
-			User user = userDB.hm.get(studentLogin);
+		if (userDB.containsUser(studentLogin)){
+			User user = userDB.getUser(studentLogin);
 			String studentPwd = user.getUserPwd();
 			if (getUserClass(studentLogin,studentPwd)=="Student"){
 				int groupid = Integer.parseInt(((Student) user).getStudentGroupId());
@@ -86,9 +87,9 @@ public class UserController implements IUserController
 			String pwd) {
 		//TODO
 		
-		if (!userDB.hm.containsKey(newAdminlogin)){
+		if (!userDB.containsUser(newAdminlogin)){
 		Admin admin = new Admin (surname, firstname, newAdminlogin, pwd, userId);
-		userDB.hm.put(newAdminlogin,admin);
+		userDB.addUser(admin);
 		return true;
 	}
 	else{
@@ -101,9 +102,9 @@ public class UserController implements IUserController
 			String surname, String pwd) {
 		//TODO
 		
-		if (!userDB.hm.containsKey(newteacherLogin)){
+		if (!userDB.containsUser(newteacherLogin)){
 			Teacher userLogin = new Teacher (surname, firstname, newteacherLogin, pwd, userId);
-			userDB.hm.put(newteacherLogin,userLogin);
+			userDB.addUser(userLogin);
 			return true;
 		}
 		return false;
@@ -115,7 +116,7 @@ public class UserController implements IUserController
 		//TODO
 		
 		Student userLogin = new Student (surname, firstname, newStudentLogin,  pwd, userId);
-		userDB.hm.put(newStudentLogin,userLogin);
+		userDB.addUser(userLogin);
 		
 		return false;
 	}
@@ -123,8 +124,15 @@ public class UserController implements IUserController
 	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
 		// TODO 
-			if (userDB.hm.containsKey(userLogin)){
-				userDB.hm.remove(userLogin);
+			if (userDB.containsUser(userLogin)){
+				User user = userDB.getUser(userLogin);
+				if (user.getUserId()!=0&&user.getUserId()<8001){
+					if (Integer.parseInt(((Student) user).getStudentGroupId())!=0){
+							Group group = userDB.getGroup(((Student) user).getStudentGroupId());
+							group.removeStudent(userLogin);
+					}
+				}
+				userDB.removeUser(userLogin);
 			return true;
 			}
 		return false;
@@ -133,10 +141,10 @@ public class UserController implements IUserController
 	@Override
 	public boolean addGroup(String adminLogin, int groupId) {
 		// TODO
-			if (!userDB.hg.containsKey(String.valueOf(groupId))){
+			if (!userDB.containsGroup(String.valueOf(groupId))){
 				String id = String.valueOf(groupId);
 				Group group = new Group(id);
-				userDB.hg.put(id,group);
+				userDB.addGroup(group);
 				return true;
 			}
 			return false;
@@ -146,8 +154,8 @@ public class UserController implements IUserController
 	@Override
 	public boolean removeGroup(String adminLogin, int groupId) {
 		// TODO
-			if (userDB.hg.containsKey(String.valueOf(groupId))){
-				userDB.hg.remove(groupId);
+			if (userDB.containsGroup(String.valueOf(groupId))){
+				userDB.removeGroup(String.valueOf(groupId));
 				return true;
 			}
 			return false;
@@ -155,11 +163,11 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
-		// TODO
-		Group group = userDB.hg.get(String.valueOf(groupId));
+
+		Group group = userDB.getGroup(String.valueOf(groupId));
 		if (group!=null){
 			if(!group.contains(studentLogin)){
-				Student student = (Student) userDB.hm.get(studentLogin);
+				Student student = (Student) userDB.getUser(studentLogin);
 				if (student!=null){
 					student.setStudentGroupId(String.valueOf(groupId));
 					group.addStudent(studentLogin);
@@ -172,46 +180,53 @@ public class UserController implements IUserController
 
 	@Override
 	public String[] usersToString() {
-		Set<String[]> usersSet = new HashSet<String[]>() ;
-		Set<String>key = userDB.hm.keySet();
-		Iterator<String> itkey = key.iterator();
-		while (itkey.hasNext()){
-			String userLogin = itkey.next();
-			Student student = (Student) userDB.hm.get(userLogin);
-				String[] studentData = new String[6];
-				studentData[0] = student.getUserLogin();
-				studentData[1] = student.getUserName();
-				studentData[2] = student.getUserSurname();
-				studentData[3] = String.valueOf(student.getUserId());	 		
-				studentData[4] = student.getUserPwd();
-				studentData[5] = student.studentGroupId;
-			usersSet.add(studentData);
+		Set<String>keySet = userDB.userKeySet();
+		String[] keys = keySet.toArray(new String[keySet.size()]);
+		String[] users = new String[keySet.size()];;
+		for (int i=0;i<keys.length;i++){
+			String userLogin = keys[i];
+			if (userLogin!=null){
+				User user = userDB.getUser(userLogin);
+				String userData=user.getUserLogin()+" - "+user.getUserName()+" - "+user.getUserSurname()+" - "+String.valueOf(user.getUserId())+" - "+user.getUserPwd();
+				if (user.getUserId()!=0&&user.getUserId()<8001){
+					userData += " - " + ((Student)user).getStudentGroupId();
+				}
+				users[i] = userData;
+			}
 		}
-		String[] users = usersSet.toArray(new String[usersSet.size()]);
+		System.out.println(Arrays.toString(users));
 		return users;
 	}
 
 	@Override
 	public String[] groupsToString() {
-		Set<String[]> groupsSet = new HashSet<String[]>() ;
-		Set<String>key = userDB.hg.keySet();
-		Iterator<String> itkey = key.iterator();
-		while (itkey.hasNext()){
-			String groupLogin = itkey.next();
-			Group group = (Group) userDB.hg.get(groupLogin);
-				Set<String> groupdata = new HashSet<String>();
-				groupdata.add(group.getGroupId());
-				groupdata.addAll(group.getStudents());
-				String[] groupData = groupdata.toArray(new String[groupdata.size()]);
-			groupsSet.add(groupData);
+		Set<String>keySet = userDB.groupKeySet();
+		String[] keys = keySet.toArray(new String[keySet.size()]);
+		String[] groups = new String[keySet.size()];
+		for (int i=0;i<keys.length;i++){
+			String groupId = keys[i];
+			Group group = userDB.getGroup(groupId);
+			String groupData = "";
+			if (group!=null) {
+				groupData = group.getGroupId();
+				HashSet<String> groupStudents = group.getStudents();
+				Iterator<String> itGroupStudents = groupStudents.iterator();
+					while (itGroupStudents.hasNext()){
+						String student = itGroupStudents.next();
+						groupData += " - " + student;
+					}
+				if (groupData!=null){
+					groups[i] = groupData;
+				}
+			}
 		}
-		String[] groups = groupsSet.toArray(new String[groupsSet.size()]);
+		System.out.println(Arrays.toString(groups));
 		return groups;
 	}
 	
 	@Override
 	public String[] usersLoginToString() {
-		Set<String> key = userDB.hm.keySet();
+		Set<String> key = userDB.userKeySet();
 		String[] usersLogin = key.toArray(new String[key.size()]);
 		return usersLogin;
 	}
@@ -219,13 +234,13 @@ public class UserController implements IUserController
 	@Override
 	public String[] studentsLoginToString() {
 		
-		Set<String> key = userDB.hm.keySet();
+		Set<String> key = userDB.userKeySet();
 		Set<String> studentskey = new HashSet<String>();
 		Iterator<String> itkey = key.iterator();
 		
 		while (itkey.hasNext()) {
 			String userlog = itkey.next();
-			User user = userDB.hm.get(userlog);
+			User user = userDB.getUser(userlog);
 			if (user.getUserId()>0&&user.getUserId()<8001) {
 				studentskey.add(userlog);
 			}
@@ -237,13 +252,13 @@ public class UserController implements IUserController
 	
 	private String[] adminsLoginToString() {
 		
-		Set<String> key = userDB.hm.keySet();
+		Set<String> key = userDB.userKeySet();
 		Set<String> adminskey = new HashSet<String>();
 		Iterator<String> itkey = key.iterator();
 		
 		while (itkey.hasNext()) {
 			String userlog = itkey.next();
-			User user = userDB.hm.get(userlog);
+			User user = userDB.getUser(userlog);
 			if (user.getUserId()>9000) {
 				adminskey.add(userlog);
 			}
@@ -255,13 +270,13 @@ public class UserController implements IUserController
 
 	private String[] teachersLoginToString() {
 		
-		Set<String> key = userDB.hm.keySet();
+		Set<String> key = userDB.userKeySet();
 		Set<String> teacherskey = new HashSet<String>();
 		Iterator<String> itkey = key.iterator();
 		
 		while (itkey.hasNext()) {
 			String userlog = itkey.next();
-			User user = userDB.hm.get(userlog);
+			User user = userDB.getUser(userlog);
 			if (user.getUserId()<9001&&user.getUserId()>8000) {
 				teacherskey.add(userlog);
 			}
@@ -272,7 +287,7 @@ public class UserController implements IUserController
 	}
 	@Override
 	public String[] groupsIdToString() {
-			Set<String> key = userDB.hg.keySet();
+			Set<String> key = userDB.groupKeySet();
 			String[] groupId = key.toArray(new String[key.size()]);
 		return groupId;
 	}
@@ -312,7 +327,7 @@ public class UserController implements IUserController
 				Element groupElt = (Element)itGroup.next();
 					String groupId = groupElt.getChild("GroupId").getText();
 				Group group = new Group (groupId);
-				userDB.hg.put(groupId,group);
+				userDB.addGroup(group);
 					
 				List<Element> groupStudentElts = groupElt.getChildren("GroupStudent");
 				Iterator<Element> itgroupStudent = groupStudentElts.iterator();
@@ -340,7 +355,7 @@ public class UserController implements IUserController
 					String id = adminElt.getChild("AdminID").getText();
 					int adminId = Integer.parseInt(id);
 				Admin Admin = new Admin (userSurname,userName,userLogin,userPwd,adminId);
-				userDB.hm.put(userLogin,Admin);
+				userDB.addUser(Admin);
 			}
 			
 			//class student
@@ -357,7 +372,7 @@ public class UserController implements IUserController
 					String id = studentElt.getChild("StudentID").getText();
 					int studentId = Integer.parseInt(id);
 				Student Student = new Student (userSurname,userName,userLogin,userPwd,studentId);
-				userDB.hm.put(userLogin,Student);
+				userDB.addUser(Student);
 			}
 			
 			//class teacher
@@ -374,7 +389,7 @@ public class UserController implements IUserController
 					String id = teacherElt.getChild("TeacherID").getText();
 					int teacherId = Integer.parseInt(id);
 				Teacher TeacherID = new Teacher (userSurname,userName,userLogin,userPwd,teacherId);
-				userDB.hm.put(userLogin,TeacherID);
+				userDB.addUser(TeacherID);
 			}
 		}
 		return false;
@@ -397,7 +412,7 @@ public class UserController implements IUserController
 			if (groupsID.length!=0){
 				Element groups = new Element ("Groups");
 				for(int i = 0; i<groupsID.length; i++) {
-					Group user = userDB.hg.get(groupsID[i]);
+					Group user = userDB.getGroup(groupsID[i]);
 					if (user!=null){
 						Element group = new Element ("Group");
 							Element groupID = new Element("GroupID"); 
@@ -423,7 +438,7 @@ public class UserController implements IUserController
 			if (adminsLogin[0]!=null){
 				Element admins = new Element("Admins");
 				for (int i = 0; i<adminsLogin.length; i++) {
-					Admin user = (Admin) userDB.hm.get(adminsLogin[i]);
+					Admin user = (Admin) userDB.getUser(adminsLogin[i]);
 					if (user!=null){
 						Element admin = new Element ("Admin");
 							Element userLogin = new Element ("UserLogin");
@@ -452,7 +467,7 @@ public class UserController implements IUserController
 			if (studentsLogin[0]!=null){
 				Element students = new Element ("Students");
 				for (int i = 0; i<studentsLogin.length; i++) {
-					Student user = (Student) userDB.hm.get(studentsLogin[i]);
+					Student user = (Student) userDB.getUser(studentsLogin[i]);
 					if (user!=null){
 						Element student = new Element ("Student");
 							Element userLogin = new Element ("UserLogin");
@@ -481,7 +496,7 @@ public class UserController implements IUserController
 			if (teachersLogin[1]!=null){
 				Element teachers = new Element ("Teachers");
 				for (int i = 0; i<teachersLogin.length; i++) {
-					Teacher user = (Teacher) userDB.hm.get(teachersLogin[i]);
+					Teacher user = (Teacher) userDB.getUser(teachersLogin[i]);
 					if (user!=null){
 						Element teacher = new Element ("Teacher");
 							Element userLogin = new Element ("UserLogin");

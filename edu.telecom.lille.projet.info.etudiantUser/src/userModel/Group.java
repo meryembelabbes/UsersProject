@@ -28,7 +28,7 @@ public class Group {
 	/**
 	 * Description of the property NbStud.
 	 */
-	private Integer NbStud = students.size();
+	private Integer NbStud = 0;
 
 
 
@@ -67,10 +67,13 @@ public class Group {
 	public void setStudents(HashSet<String> newStudents){
 		this.students = newStudents;
 	}
+
 	public void addStudent(String studentLogin) {
+		this.NbStud +=1;
 		students.add(studentLogin);
 	}
 	public void removeStudent(String studentLogin) {
+		this.NbStud -=1;
 		students.remove(studentLogin);
 	}
 	public boolean contains(String studentLogin){

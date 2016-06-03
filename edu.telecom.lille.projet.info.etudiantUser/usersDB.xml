@@ -5,13 +5,6 @@
       <GroupID>1</GroupID>
       <GroupStudents>
         <GroupStudent>BS</GroupStudent>
-        <GroupStudent>BT</GroupStudent>
-      </GroupStudents>
-    </Group>
-    <Group>
-      <GroupID>2</GroupID>
-      <GroupStudents>
-        <GroupStudent>NL</GroupStudent>
       </GroupStudents>
     </Group>
   </Groups>
@@ -38,13 +31,6 @@
       <UserSurname>Summers</UserSurname>
       <UserPwd>stake</UserPwd>
       <StudentID>1</StudentID>
-    </Student>
-    <Student>
-      <UserLogin>BT</UserLogin>
-      <UserName>Thibaud</UserName>
-      <UserSurname>Blondin</UserSurname>
-      <UserPwd>zboub</UserPwd>
-      <StudentID>3</StudentID>
     </Student>
     <Student>
       <UserLogin>NL</UserLogin>
