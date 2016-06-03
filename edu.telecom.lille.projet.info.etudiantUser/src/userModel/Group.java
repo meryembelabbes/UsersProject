@@ -18,7 +18,7 @@ public class Group {
 	/**
 	 * Description of the property groupId.
 	 */
-	public String groupId = "";
+	private String groupId = "";
 
 	/**
 	 * Description of the property students.
@@ -28,7 +28,7 @@ public class Group {
 	/**
 	 * Description of the property NbStud.
 	 */
-	public Integer NbStud = students.size();
+	private Integer NbStud = students.size();
 
 
 
@@ -60,12 +60,7 @@ public class Group {
 	public void setGroupId(String newGroupId) {
 		this.groupId = newGroupId;
 	}
-
-	/**
-	 * Returns students.
-	 * @return students 
-	 */
-
+	
 	/**
 	 * Returns NbStud.
 	 * @return NbStud 

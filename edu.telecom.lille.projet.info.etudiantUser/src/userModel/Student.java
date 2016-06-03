@@ -15,14 +15,9 @@ import userModel.User;
  */
 public class Student extends User {
 	/**
-	 * Description of the property studentId.
-	 */
-	public String studentId = "";
-
-	/**
 	 * Description of the property studentGroupId.
 	 */
-	public String studentGroupId = "";
+	public String studentGroupId = "0";
 
 	// Start of user code (user defined attributes for Student)
 

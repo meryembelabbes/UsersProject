@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <UserBD>
+  <Groups>
+    <Group>
+      <GroupID>1</GroupID>
+      <GroupStudents />
+    </Group>
+    <Group>
+      <GroupID>2</GroupID>
+      <GroupStudents />
+    </Group>
+  </Groups>
   <Admins>
     <Admin>
       <UserLogin>KR</UserLogin>
