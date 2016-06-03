@@ -42,13 +42,6 @@
   </Students>
   <Teachers>
     <Teacher>
-      <UserLogin>MF</UserLogin>
-      <UserName>Morgan</UserName>
-      <UserSurname>Freeman</UserSurname>
-      <UserPwd>iknowall</UserPwd>
-      <TeacherID>8002</TeacherID>
-    </Teacher>
-    <Teacher>
       <UserLogin>GS</UserLogin>
       <UserName>Grand</UserName>
       <UserSurname>Schtroumpf</UserSurname>

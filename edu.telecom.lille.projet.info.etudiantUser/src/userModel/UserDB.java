@@ -118,5 +118,9 @@ public class UserDB {
 	public Group getGroup (String groupId){
 		return this.hg.get(groupId);
 	}
+	public void removeUserGroup (String groupId, String userLogin) {
+		Group group = hg.get(groupId);
+		group.removeStudent(userLogin);
+	}
 }
 	

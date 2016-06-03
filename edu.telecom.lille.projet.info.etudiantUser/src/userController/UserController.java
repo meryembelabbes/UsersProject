@@ -124,12 +124,11 @@ public class UserController implements IUserController
 	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
 		// TODO 
-			if (userDB.containsUser(userLogin)){
+			if (userDB.containsUser(userLogin)&&userLogin!="su"){
 				User user = userDB.getUser(userLogin);
-				if (user.getUserId()!=0&&user.getUserId()<8001){
+				if (user.getUserId()<8001){
 					if (Integer.parseInt(((Student) user).getStudentGroupId())!=0){
-							Group group = userDB.getGroup(((Student) user).getStudentGroupId());
-							group.removeStudent(userLogin);
+						userDB.removeUserGroup(((Student) user).getStudentGroupId(), userLogin);
 					}
 				}
 				userDB.removeUser(userLogin);
@@ -155,6 +154,14 @@ public class UserController implements IUserController
 	public boolean removeGroup(String adminLogin, int groupId) {
 		// TODO
 			if (userDB.containsGroup(String.valueOf(groupId))){
+				Group group = userDB.getGroup(String.valueOf(groupId));
+				HashSet<String> students = group.getStudents();
+				Iterator<String> itStudents = students.iterator();
+				while (itStudents.hasNext()){
+					String studentLog = itStudents.next();
+					Student student = (Student)userDB.getUser (studentLog);
+					student.setStudentGroupId("0");
+				}
 				userDB.removeGroup(String.valueOf(groupId));
 				return true;
 			}
@@ -169,6 +176,9 @@ public class UserController implements IUserController
 			if(!group.contains(studentLogin)){
 				Student student = (Student) userDB.getUser(studentLogin);
 				if (student!=null){
+					if (student.getStudentGroupId()!="0"){
+						
+					}
 					student.setStudentGroupId(String.valueOf(groupId));
 					group.addStudent(studentLogin);
 					return true;
@@ -435,7 +445,7 @@ public class UserController implements IUserController
 			
 			//Loop for admins
 			
-			if (adminsLogin[0]!=null){
+			if (adminsLogin.length!=0){
 				Element admins = new Element("Admins");
 				for (int i = 0; i<adminsLogin.length; i++) {
 					Admin user = (Admin) userDB.getUser(adminsLogin[i]);
@@ -464,7 +474,7 @@ public class UserController implements IUserController
 			
 			//Loop for students
 			
-			if (studentsLogin[0]!=null){
+			if (studentsLogin.length!=0){
 				Element students = new Element ("Students");
 				for (int i = 0; i<studentsLogin.length; i++) {
 					Student user = (Student) userDB.getUser(studentsLogin[i]);
@@ -493,7 +503,7 @@ public class UserController implements IUserController
 			
 			//Loop for teachers
 			
-			if (teachersLogin[1]!=null){
+			if (teachersLogin.length!=0){
 				Element teachers = new Element ("Teachers");
 				for (int i = 0; i<teachersLogin.length; i++) {
 					Teacher user = (Teacher) userDB.getUser(teachersLogin[i]);

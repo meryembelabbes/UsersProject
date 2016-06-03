@@ -41,6 +41,7 @@ public class Main {
 		UC.groupsToString();
 		UC.removeGroup("su", 0002);
 		UC.removeUser("su","BT");
+		UC.removeUser("su","MF");
 		UC.usersToString();
 		UC.groupsToString();
 		UC.saveDB();
