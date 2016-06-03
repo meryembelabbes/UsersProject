@@ -3,11 +3,16 @@
   <Groups>
     <Group>
       <GroupID>1</GroupID>
-      <GroupStudents />
+      <GroupStudents>
+        <GroupStudent>BS</GroupStudent>
+        <GroupStudent>BT</GroupStudent>
+      </GroupStudents>
     </Group>
     <Group>
       <GroupID>2</GroupID>
-      <GroupStudents />
+      <GroupStudents>
+        <GroupStudent>NL</GroupStudent>
+      </GroupStudents>
     </Group>
   </Groups>
   <Admins>

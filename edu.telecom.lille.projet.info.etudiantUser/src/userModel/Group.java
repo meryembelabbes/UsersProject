@@ -23,7 +23,7 @@ public class Group {
 	/**
 	 * Description of the property students.
 	 */
-	public HashSet<String> students = new HashSet<String>();
+	private HashSet<String> students = new HashSet<String>();
 
 	/**
 	 * Description of the property NbStud.
@@ -60,7 +60,25 @@ public class Group {
 	public void setGroupId(String newGroupId) {
 		this.groupId = newGroupId;
 	}
+	public HashSet<String> getStudents(){
+		return this.students;
+	}
 	
+	public void setStudents(HashSet<String> newStudents){
+		this.students = newStudents;
+	}
+	public void addStudent(String studentLogin) {
+		students.add(studentLogin);
+	}
+	public void removeStudent(String studentLogin) {
+		students.remove(studentLogin);
+	}
+	public boolean contains(String studentLogin){
+		if (students.contains(studentLogin)){
+		return true;
+		}
+		return false;
+	}
 	/**
 	 * Returns NbStud.
 	 * @return NbStud 

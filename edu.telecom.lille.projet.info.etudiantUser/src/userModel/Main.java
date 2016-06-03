@@ -36,5 +36,8 @@ public class Main {
 		UC.associateStudToGroup("su", "BS", 0001);
 		UC.associateStudToGroup("su", "NL", 0002);
 		UC.saveDB();
+		UC.loadDB();
+		UC.usersToString();
+		UC.groupsToString();
 	}
 }

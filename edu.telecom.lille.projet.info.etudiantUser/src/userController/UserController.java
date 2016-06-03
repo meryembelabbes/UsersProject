@@ -87,8 +87,8 @@ public class UserController implements IUserController
 		//TODO
 		
 		if (!userDB.hm.containsKey(newAdminlogin)){
-		Admin userLogin = new Admin (surname, firstname, newAdminlogin, pwd, userId);
-		userDB.hm.put(newAdminlogin,userLogin);
+		Admin admin = new Admin (surname, firstname, newAdminlogin, pwd, userId);
+		userDB.hm.put(newAdminlogin,admin);
 		return true;
 	}
 	else{
@@ -102,9 +102,9 @@ public class UserController implements IUserController
 		//TODO
 		
 		if (!userDB.hm.containsKey(newteacherLogin)){
-		Teacher userLogin = new Teacher (surname, firstname, newteacherLogin, pwd, userId);
-		userDB.hm.put(newteacherLogin,userLogin);
-		return true;
+			Teacher userLogin = new Teacher (surname, firstname, newteacherLogin, pwd, userId);
+			userDB.hm.put(newteacherLogin,userLogin);
+			return true;
 		}
 		return false;
 	}
@@ -156,14 +156,13 @@ public class UserController implements IUserController
 	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
 		// TODO
-		Group group = userDB.hg.get(groupId);
+		Group group = userDB.hg.get(String.valueOf(groupId));
 		if (group!=null){
-			if(!group.students.contains(studentLogin)){
-				group.students.add(studentLogin);
-		
+			if(!group.contains(studentLogin)){
 				Student student = (Student) userDB.hm.get(studentLogin);
 				if (student!=null){
-					student.studentGroupId = String.valueOf(groupId);
+					student.setStudentGroupId(String.valueOf(groupId));
+					group.addStudent(studentLogin);
 					return true;
 				}
 			}
@@ -202,7 +201,7 @@ public class UserController implements IUserController
 			Group group = (Group) userDB.hg.get(groupLogin);
 				Set<String> groupdata = new HashSet<String>();
 				groupdata.add(group.getGroupId());
-				groupdata.addAll(group.students);
+				groupdata.addAll(group.getStudents());
 				String[] groupData = groupdata.toArray(new String[groupdata.size()]);
 			groupsSet.add(groupData);
 		}
@@ -321,7 +320,7 @@ public class UserController implements IUserController
 				while (itgroupStudent.hasNext()){
 						Element groupStudentElt = (Element)itgroupStudent.next();
 							String groupStudentLogin = groupStudentElt.getText();
-						group.students.add(groupStudentLogin);	
+						group.addStudent(groupStudentLogin);	
 				}
 			}
 			
@@ -405,13 +404,12 @@ public class UserController implements IUserController
 								groupID.setText(user.getGroupId());
 							group.addContent(groupID);
 							Element groupStudents = new Element ("GroupStudents");
-								Set<String> groupStudentsList = user.students; 
-								Iterator<String> itgroupStudent = groupStudentsList.iterator();
+								Set<String> groupStudentList = user.getStudents();
+								Iterator<String> itgroupStudent = groupStudentList.iterator();
 								while (itgroupStudent.hasNext()){
 									String groupstudentlog = itgroupStudent.next();
 									Element groupStudent = new Element ("GroupStudent");
-										groupStudent.setText(groupstudentlog);
-									groupStudents.addContent(groupStudent);
+									groupStudents.addContent(groupStudent.setText(groupstudentlog));		
 								}
 								group.addContent(groupStudents);
 						groups.addContent(group);
@@ -422,7 +420,7 @@ public class UserController implements IUserController
 			
 			//Loop for admins
 			
-			if (adminsLogin[1]!=null){
+			if (adminsLogin[0]!=null){
 				Element admins = new Element("Admins");
 				for (int i = 0; i<adminsLogin.length; i++) {
 					Admin user = (Admin) userDB.hm.get(adminsLogin[i]);
