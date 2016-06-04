@@ -25,8 +25,7 @@ import userModel.*;
  * 
  */
 
-public class UserController implements IUserController
-{
+public class UserController implements IUserController {
 	
 	/**
 	 * Contient une instance de base de données d'utilisateurs
@@ -49,7 +48,7 @@ public class UserController implements IUserController
 	@Override
 	public String getUserName(String userLogin) {
 			User user = userDB.getUser(userLogin);
-		return user.getUserName() +" "+ user.getUserSurname();
+		return user.getUserName()+" "+ user.getUserSurname();
 	}
 
 	@Override
@@ -85,8 +84,6 @@ public class UserController implements IUserController
 	@Override
 	public boolean addAdmin(String adminLogin, String newAdminlogin, int userId, String firstname, String surname,
 			String pwd) {
-		//TODO
-		
 		if (!userDB.containsUser(newAdminlogin)){
 		Admin admin = new Admin (surname, firstname, newAdminlogin, pwd, userId);
 		userDB.addUser(admin);
@@ -100,8 +97,6 @@ public class UserController implements IUserController
 	@Override
 	public boolean addTeacher(String adminLogin, String newteacherLogin, int userId, String firstname,
 			String surname, String pwd) {
-		//TODO
-		
 		if (!userDB.containsUser(newteacherLogin)){
 			Teacher userLogin = new Teacher (surname, firstname, newteacherLogin, pwd, userId);
 			userDB.addUser(userLogin);
@@ -113,21 +108,17 @@ public class UserController implements IUserController
 	@Override
 	public boolean addStudent(String adminLogin, String newStudentLogin, int userId, String firstname,
 			String surname, String pwd) {
-		//TODO
-		
 		Student userLogin = new Student (surname, firstname, newStudentLogin,  pwd, userId);
 		userDB.addUser(userLogin);
-		
 		return false;
 	}
 
 	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
-		// TODO 
 			if (userDB.containsUser(userLogin)&&userLogin!="su"){
 				User user = userDB.getUser(userLogin);
 				if (user.getUserId()<8001){
-					if (Integer.parseInt(((Student) user).getStudentGroupId())!=0){
+					if (((Student) user).getStudentGroupId()!="0"){
 						userDB.removeUserGroup(((Student) user).getStudentGroupId(), userLogin);
 					}
 				}
@@ -139,7 +130,6 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean addGroup(String adminLogin, int groupId) {
-		// TODO
 			if (!userDB.containsGroup(String.valueOf(groupId))){
 				String id = String.valueOf(groupId);
 				Group group = new Group(id);
@@ -152,7 +142,6 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean removeGroup(String adminLogin, int groupId) {
-		// TODO
 			if (userDB.containsGroup(String.valueOf(groupId))){
 				Group group = userDB.getGroup(String.valueOf(groupId));
 				HashSet<String> students = group.getStudents();
@@ -170,19 +159,16 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
-
 		Group group = userDB.getGroup(String.valueOf(groupId));
-		if (group!=null){
-			if(!group.contains(studentLogin)){
-				Student student = (Student) userDB.getUser(studentLogin);
-				if (student!=null){
-					if (student.getStudentGroupId()!="0"){
-						
-					}
-					student.setStudentGroupId(String.valueOf(groupId));
-					group.addStudent(studentLogin);
-					return true;
+		if (group!=null&&!group.contains(studentLogin)){
+			Student student = (Student) userDB.getUser(studentLogin);
+			if (student!=null){
+				if (student.getStudentGroupId()!="0"){
+					userDB.removeUserGroup(student.getStudentGroupId(), student.getUserLogin());
 				}
+				student.setStudentGroupId(String.valueOf(groupId));
+				group.addStudent(studentLogin);
+				return true;
 			}
 		}
 		return false;
@@ -243,7 +229,6 @@ public class UserController implements IUserController
 
 	@Override
 	public String[] studentsLoginToString() {
-		
 		Set<String> key = userDB.userKeySet();
 		Set<String> studentskey = new HashSet<String>();
 		Iterator<String> itkey = key.iterator();
@@ -256,16 +241,14 @@ public class UserController implements IUserController
 			}
 		}
 		String[] studentsLogin = studentskey.toArray(new String[key.size()]);
-		
 		return studentsLogin;
 	}
 	
 	private String[] adminsLoginToString() {
-		
 		Set<String> key = userDB.userKeySet();
 		Set<String> adminskey = new HashSet<String>();
 		Iterator<String> itkey = key.iterator();
-		
+
 		while (itkey.hasNext()) {
 			String userlog = itkey.next();
 			User user = userDB.getUser(userlog);
@@ -274,12 +257,10 @@ public class UserController implements IUserController
 			}
 		}
 		String[] adminsLogin = adminskey.toArray(new String[key.size()]);
-		
 		return adminsLogin;
 	}
 
 	private String[] teachersLoginToString() {
-		
 		Set<String> key = userDB.userKeySet();
 		Set<String> teacherskey = new HashSet<String>();
 		Iterator<String> itkey = key.iterator();
@@ -292,7 +273,6 @@ public class UserController implements IUserController
 			}
 		}
 		String[] teachersLogin = teacherskey.toArray(new String[key.size()]);
-		
 		return teachersLogin;
 	}
 	@Override
@@ -313,12 +293,10 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean loadDB() {
-		//Creation
-		
 		org.jdom2.Document document = null;
 		Element rootElt;
 		
-		//Read
+		//Lecture
 		
 		SAXBuilder sxb = new SAXBuilder();
 		try{
@@ -353,8 +331,6 @@ public class UserController implements IUserController
 			
 			List<Element> adminElts = rootElt.getChildren("Admin");
 			Iterator<Element> itAdmin = adminElts.iterator();
-			
-			
 			
 			while (itAdmin.hasNext()){
 				Element adminElt = (Element)itAdmin.next();
@@ -413,7 +389,7 @@ public class UserController implements IUserController
 		String[] teachersLogin = teachersLoginToString();
 		String[] groupsID = groupsIdToString();
 		
-		//Translation
+		//Conversion
 		Element rootElt = new Element ("UserBD");
 		Document document = new Document(rootElt);
 		
@@ -530,7 +506,7 @@ public class UserController implements IUserController
 				rootElt.addContent(teachers);
 			}
 
-			//Write
+			//Ecriture
 			try{
 				XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 				sortie.output(document, new FileOutputStream(UserDB.getFile()));
