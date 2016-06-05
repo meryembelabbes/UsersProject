@@ -5,12 +5,12 @@ import java.util.Set;
 
 /**
  * 
- * Cette classe gére la base de données d'utilisateurs. Elle doit permettre de sauvegarder et charger les utilisateurs et les groupes à partir d'un fichier XML. 
+ * Cette classe gère la base de données d'utilisateurs. Elle doit permettre de sauvegarder et charger les utilisateurs et les groupes À partir d'un fichier XML. 
  * La structure du fichier XML devra être la même que celle du fichier userDB.xml.
  * @see <a href="../../userDB.xml">userDB.xml</a> 
  * 
- * @author Jose Mennesson (Mettre à jour)
- * @version 04/2016 (Mettre à jour)
+ * @author  
+ * @version 06/2016 
  * 
  */
 
@@ -28,11 +28,13 @@ public class UserDB {
 	 * 
 	 * Constructeur de UserDB. 
 	 * 
-	 * !!!!!!!!!!!! PENSEZ À AJOUTER UN ADMINISTRATEUR (su par exemple) QUI VOUS PERMETTRA DE CHARGER LA BASE DE DONNÉES AU DEMARRAGE DE L'APPLICATION !!!!!!
+	 
 	 * 
 	 * @param file2
 	 * 		Le nom du fichier qui contient la base de données.
+	 *  Création de l'admnistrateur 'su' qui permettra de charger la base de données au démarrage de l'application
 	 */
+	 
 	public UserDB(String file){
 		super();
 		this.setFile(file);
@@ -44,7 +46,7 @@ public class UserDB {
 	 * Getter de file
 	 * 
 	 * @return 
-	 * 		Le nom du fichier qui contient la base de donn�es.
+	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	
 	public static String getFile() {
@@ -60,10 +62,21 @@ public class UserDB {
 	public void setFile(String file) {
 		UserDB.file = file;
 	}
-	
+	/**
+	 * Getter de userDB
+	 * 
+	 * @return 
+	 * 		Le Login et le User du userDB dans la base de données
+	 */
 	public HashMap<String, User> getUserDataBse(){
 		return this.hm;
 	}
+	/**
+	 * Setter de file
+	 * 
+	 * @param file
+	 * 		Le Login et le User du userDB dans la base de données
+	 */
 	
 	public void setDataBase(HashMap<String,User> newhm){
 		this.hm = newhm;
