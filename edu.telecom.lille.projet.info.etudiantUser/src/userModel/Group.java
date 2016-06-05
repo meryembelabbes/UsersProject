@@ -12,7 +12,7 @@ import java.util.HashSet;
 /**
  * Description of Group.
  * 
- * @author mac
+ * @author meryem
  */
 public class Group {
 	/**
