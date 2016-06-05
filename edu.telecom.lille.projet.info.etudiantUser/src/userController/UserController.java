@@ -85,13 +85,11 @@ public class UserController implements IUserController {
 	public boolean addAdmin(String adminLogin, String newAdminlogin, int userId, String firstname, String surname,
 			String pwd) {
 		if (!userDB.containsUser(newAdminlogin)){
-		Admin admin = new Admin (surname, firstname, newAdminlogin, pwd, userId);
-		userDB.addUser(admin);
-		return true;
-	}
-	else{
+			Admin admin = new Admin (surname, firstname, newAdminlogin, pwd, userId);
+			userDB.addUser(admin);
+			return true;
+		}
 		return false;
-	}
 	}
 
 	@Override
@@ -108,8 +106,11 @@ public class UserController implements IUserController {
 	@Override
 	public boolean addStudent(String adminLogin, String newStudentLogin, int userId, String firstname,
 			String surname, String pwd) {
-		Student userLogin = new Student (surname, firstname, newStudentLogin,  pwd, userId);
-		userDB.addUser(userLogin);
+		if (!userDB.containsUser(newStudentLogin)){
+			Student userLogin = new Student (surname, firstname, newStudentLogin,  pwd, userId);
+			userDB.addUser(userLogin);
+			return true;
+		}
 		return false;
 	}
 
@@ -167,7 +168,7 @@ public class UserController implements IUserController {
 					userDB.removeUserGroup(student.getStudentGroupId(), student.getUserLogin());
 				}
 				student.setStudentGroupId(String.valueOf(groupId));
-				group.addStudent(studentLogin);
+				userDB.addUserGroup(String.valueOf(groupId),studentLogin);
 				return true;
 			}
 		}

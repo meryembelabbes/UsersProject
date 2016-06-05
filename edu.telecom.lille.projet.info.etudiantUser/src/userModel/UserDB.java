@@ -152,5 +152,9 @@ public class UserDB {
 		Group group = hg.get(groupId);
 		group.removeStudent(userLogin);
 	}
+	public void addUserGroup (String groupId, String userLogin) {
+		Group group = hg.get(groupId);
+		group.addStudent(userLogin);
+	}
 }
 	
