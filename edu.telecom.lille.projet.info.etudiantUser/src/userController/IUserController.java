@@ -6,8 +6,8 @@ package userController;
  * Elle permet à cette dernière d'être indépendante par rapport à votre implémentation de la gestion des utilisateurs.
  * Cette classe doit être implémentée par la classe UserController qui devra implémenter les fonctions décrites ci-dessous.
  * 
- * @author Jose Mennesson
- * @version 04/2016
+ * @author Thibaud
+ * @version 06/2016
  */
 
 //TODO Classe à ne pas modifier
