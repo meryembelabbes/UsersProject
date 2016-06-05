@@ -10,7 +10,7 @@ package userModel;
 /**
  * Description of TimeConstraint.
  * 
- * @author mac
+ * @author meryem
  */
 public class TimeConstraint {
 	/**
