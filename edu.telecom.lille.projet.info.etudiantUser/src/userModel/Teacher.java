@@ -11,7 +11,7 @@ import userModel.User;
 /**
  * Description of Teacher.
  * 
- * @author mac
+ * @author meryem
  */
 public class Teacher extends User {
 	/**
