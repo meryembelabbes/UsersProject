@@ -9,7 +9,7 @@ import java.util.Set;
  * La structure du fichier XML devra être la même que celle du fichier userDB.xml.
  * @see <a href="../../userDB.xml">userDB.xml</a> 
  * 
- * @author  
+ * @author  Thibaud
  * @version 06/2016 
  * 
  */
