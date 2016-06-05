@@ -16,29 +16,29 @@ import org.jdom2.output.XMLOutputter;
 import userModel.*;
 
 /**
- * Cette classe est le contrôleur d'utilisateurs que vous devez implémenter. 
- * Elle contient un attribut correspondant à la base de données utilisateurs que vous allez créer.
- * Elle contient toutes les fonctions de l'interface IUserController que vous devez implémenter.
+ * Cette classe est le contrÃ´leur d'utilisateurs que vous devez implÃ©menter. 
+ * Elle contient un attribut correspondant Ã  la base de donnÃ©es utilisateurs que vous allez crÃ©er.
+ * Elle contient toutes les fonctions de l'interface IUserController que vous devez implÃ©menter.
  * 
- * @author Jose Mennesson (Mettre à jour)
- * @version 04/2016 (Mettre à jour)
+ * @author Thibaud
+ * @version 06/2016 
  * 
  */
 
 public class UserController implements IUserController {
 	
 	/**
-	 * Contient une instance de base de données d'utilisateurs
+	 * Contient une instance de base de donnÃ©es d'utilisateurs
 	 * 
 	 */
 	private UserDB userDB=null;
 	
 	
 	/**
-	 * Constructeur de controleur d'utilisateurs créant la base de données d'utilisateurs
+	 * Constructeur de controleur d'utilisateurs crÃ©ant la base de donnÃ©es d'utilisateurs
 	 * 
 	 * @param file
-	 * 		Fichier XML contenant la base de données d'utilisateurs
+	 * 		Fichier XML contenant la base de donnÃ©es d'utilisateurs
 	 */
 	public UserController(String file){
 		UserDB userDB=new UserDB(file);
