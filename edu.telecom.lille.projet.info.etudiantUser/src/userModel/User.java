@@ -10,7 +10,7 @@ package userModel;
 /**
  * Description of User.
  * 
- * @author mac
+ * @author meryem
  */
 public class User {
 	/**
